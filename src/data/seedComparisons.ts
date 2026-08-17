@@ -131,7 +131,7 @@ export const SEED_BRAND_COMPARISONS: BrandComparison[] = [
     brandA: 'Sony',
     brandB: 'Bose',
     overallWinner: 'Sony (Best Overall Value & Codecs)',
-    summary: 'Sony dominates in high-resolution codec support (LDAC), battery life, and smart EQ app customization, while Bose leads in active noise isolation and plush headband comfort.',
+    summary: 'Sony excels in high-resolution codec support (LDAC), battery life, and smart EQ app customization, while Bose leads in active noise isolation and plush headband comfort.',
     scorecards: [
       { name: 'Product Quality & Sound', weight: 30, scoreA: 9.4, scoreB: 9.2, winner: 'A' },
       { name: 'Noise Cancellation Depth', weight: 30, scoreA: 9.5, scoreB: 9.7, winner: 'B' },
