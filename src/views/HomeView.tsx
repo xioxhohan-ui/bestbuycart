@@ -18,6 +18,7 @@ import { Category } from '../types/category';
 import { useNavigation } from '../context/NavigationContext';
 import { Flame, ShieldCheck, ArrowRight, Grid, Sparkles, CheckCircle2, TrendingUp } from 'lucide-react';
 import { CategoryIcon } from '../components/ui/CategoryIcon';
+import { EmptyState } from '../components/ui/EmptyState';
 import { updatePageSEO } from '../utils/seo';
 
 export const HomeView: React.FC = () => {
@@ -175,12 +176,21 @@ export const HomeView: React.FC = () => {
             </button>
           </div>
 
-          {/* 4-Column Product Grid */}
-          <div className="grid-products grid-products-4col">
-            {trendingProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
+          {/* 4-Column Product Grid or Empty State */}
+          {trendingProducts.length === 0 ? (
+            <EmptyState
+              title="No Products Curated Yet"
+              description="The admin is currently curating products and synchronizing affiliate feeds. Check back soon!"
+              actionLabel="Browse Categories"
+              onAction={() => navigate('/categories')}
+            />
+          ) : (
+            <div className="grid-products grid-products-4col">
+              {trendingProducts.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

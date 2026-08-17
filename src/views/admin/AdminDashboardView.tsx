@@ -31,6 +31,7 @@ import { AdminReviewManager } from '../../components/admin/AdminReviewManager';
 import { AdminCommentManager } from '../../components/admin/AdminCommentManager';
 import { AdminLoyaltyManager } from '../../components/admin/AdminLoyaltyManager';
 import { AdminMenuManager } from '../../components/admin/AdminMenuManager';
+import { AdminBulkImporter } from '../../components/admin/AdminBulkImporter';
 import {
   LayoutDashboard,
   Package,
@@ -60,12 +61,14 @@ import {
   Users,
   MessageSquare,
   Award,
+  Upload,
   Menu as MenuIcon
 } from 'lucide-react';
 
 type AdminTab =
   | 'dashboard'
   | 'products'
+  | 'importer'
   | 'menu'
   | 'users'
   | 'reviews'
@@ -104,9 +107,10 @@ export const AdminDashboardView: React.FC = () => {
   }, []);
 
   const navItems: { id: AdminTab; label: string; icon: React.ReactNode }[] = [
-    { id: 'dashboard', label: 'Dashboard Overview', icon: <LayoutDashboard size={17} /> },
-    { id: 'products', label: 'Products Database', icon: <Package size={17} /> },
-    { id: 'menu', label: 'Navigation & Mega Menu', icon: <MenuIcon size={17} /> },
+    { id: 'dashboard', label: 'Overview Dashboard', icon: <LayoutDashboard size={17} /> },
+    { id: 'products', label: 'Products & Scores', icon: <Package size={17} /> },
+    { id: 'importer', label: 'Bulk Feed & Automation', icon: <Upload size={17} /> },
+    { id: 'menu', label: 'Mega Navigation Builder', icon: <MenuIcon size={17} /> },
     { id: 'users', label: 'User Management', icon: <Users size={17} /> },
     { id: 'reviews', label: 'Review Moderation', icon: <Award size={17} /> },
     { id: 'comments', label: 'Comment Discussions', icon: <MessageSquare size={17} /> },
@@ -269,6 +273,7 @@ export const AdminDashboardView: React.FC = () => {
         <main style={{ flex: 1, padding: '32px', maxWidth: '1400px', width: '100%', margin: '0 auto' }}>
           {activeTab === 'dashboard' && <AdminDashboardOverview />}
           {activeTab === 'products' && <AdminProductList categories={categories} />}
+          {activeTab === 'importer' && <AdminBulkImporter />}
           {activeTab === 'menu' && <AdminMenuManager />}
           {activeTab === 'users' && <AdminUserManager />}
           {activeTab === 'reviews' && <AdminReviewManager />}

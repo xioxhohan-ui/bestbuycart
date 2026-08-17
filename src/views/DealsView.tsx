@@ -6,6 +6,7 @@ import { useCountry } from '../context/CountryContext';
 import { useNavigation } from '../context/NavigationContext';
 import { Tag, TrendingDown, Clock, ShieldCheck, Flame, ChevronRight, ArrowRight, ExternalLink, Gift, DollarSign } from 'lucide-react';
 import { Button } from '../components/ui/Button';
+import { EmptyState } from '../components/ui/EmptyState';
 import { updatePageSEO } from '../utils/seo';
 
 type DealFilter = 'all' | 'top' | 'price_drops' | 'under25' | 'under50' | 'under100' | 'tech' | 'kitchen' | 'beauty';
@@ -115,25 +116,34 @@ export const DealsView: React.FC = () => {
           </button>
         </div>
 
-        {/* 1. Today's Top Deals Grid */}
-        {activeFilter === 'all' && (
-          <div style={{ marginBottom: '56px' }}>
-            <div className="flex items-center justify-between" style={{ marginBottom: '20px' }}>
-              <div className="flex items-center gap-xs">
-                <Flame size={20} style={{ color: '#EA580C' }} />
-                <h3 className="h3" style={{ margin: 0, textTransform: 'uppercase', letterSpacing: '0.04em', fontSize: '1rem', color: '#1A1A1A' }}>
-                  Today's Top Flash Deals & Drops
-                </h3>
+        {/* 1. Today's Top Deals Grid or Empty State */}
+        {topDeals.length === 0 ? (
+          <EmptyState
+            title="No Active Deals at the Moment"
+            description="Our automated price radar is actively monitoring retailer price drops across Amazon, Best Buy, and Walmart. Check back soon!"
+            actionLabel="Discover Trending Products"
+            onAction={() => navigate('/trending')}
+          />
+        ) : (
+          activeFilter === 'all' && (
+            <div style={{ marginBottom: '56px' }}>
+              <div className="flex items-center justify-between" style={{ marginBottom: '20px' }}>
+                <div className="flex items-center gap-xs">
+                  <Flame size={20} style={{ color: '#EA580C' }} />
+                  <h3 className="h3" style={{ margin: 0, textTransform: 'uppercase', letterSpacing: '0.04em', fontSize: '1rem', color: '#1A1A1A' }}>
+                    Today's Top Flash Deals & Drops
+                  </h3>
+                </div>
+                <span style={{ fontSize: '0.8rem', color: '#6B7280' }}>Limited-time prices</span>
               </div>
-              <span style={{ fontSize: '0.8rem', color: '#6B7280' }}>Limited-time prices</span>
-            </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '20px' }}>
-              {topDeals.map((deal) => (
-                <DealCard key={deal.id} deal={deal} />
-              ))}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '20px' }}>
+                {topDeals.map((deal) => (
+                  <DealCard key={deal.id} deal={deal} />
+                ))}
+              </div>
             </div>
-          </div>
+          )
         )}
 
         {/* 2. Recent Price Drops Table */}

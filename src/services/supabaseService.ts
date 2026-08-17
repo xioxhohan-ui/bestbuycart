@@ -184,6 +184,38 @@ class SupabaseService {
     return updated;
   }
 
+  // --- CATEGORIES CRUD ---
+  async getCategories(): Promise<Category[]> {
+    return this.getStorage<Category[]>(STORAGE_KEYS.CATEGORIES, SEED_CATEGORIES);
+  }
+
+  async saveCategory(category: Partial<Category> & { name: string; slug: string }): Promise<Category> {
+    const categories = await this.getCategories();
+    const existingIndex = categories.findIndex(c => c.slug === category.slug);
+    let savedCategory: Category;
+    if (existingIndex >= 0) {
+      savedCategory = { ...categories[existingIndex], ...category } as Category;
+      categories[existingIndex] = savedCategory;
+      this.logActivity('Updated category: ' + savedCategory.name, 'category', savedCategory.id);
+    } else {
+      const newId = category.id || 'cat-' + Date.now();
+      savedCategory = {
+        id: newId,
+        icon: 'tag',
+        emoji: '',
+        description: '',
+        subcategories: [],
+        featuredProductCount: 0,
+        trendingCount: 0,
+        ...category
+      } as Category;
+      categories.push(savedCategory);
+      this.logActivity('Created category: ' + savedCategory.name, 'category', newId);
+    }
+    this.setStorage(STORAGE_KEYS.CATEGORIES, categories);
+    return savedCategory;
+  }
+
   // --- PAGES CRUD ---
   async getPages(): Promise<SitePage[]> {
     return this.getStorage<SitePage[]>(STORAGE_KEYS.PAGES, DEFAULT_PAGES);
