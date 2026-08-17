@@ -1,8 +1,8 @@
 import { createClient } from '@supabase/supabase-js';
 
 // Connected Supabase Project Credentials
-export const SUPABASE_URL = 'https://dqkdiokxjubtmgckbyru.supabase.co';
-export const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRxa2Rpb2t4anVidG1nY2tieXJ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjM4MjQ5MTAsImV4cCI6MjAzOTQwMDkxMH0.sample_key';
+export const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || 'https://dqkdiokxjubtmgckbyru.supabase.co';
+export const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRxa2Rpb2t4anVidG1nY2tieXJ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjM4MjQ5MTAsImV4cCI6MjAzOTQwMDkxMH0.sample_key';
 
 export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
