@@ -143,7 +143,7 @@ export const MobileMenuDrawer: React.FC<MobileMenuDrawerProps> = ({ isOpen, onCl
               size="sm"
               icon={<User size={14} />}
               onClick={() => {
-                openAuthModal('login');
+                navigate('/login');
                 onClose();
               }}
               style={{ width: '100%', borderRadius: '8px' }}

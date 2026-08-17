@@ -30,6 +30,11 @@ import { OverhypedView } from './views/OverhypedView';
 import { ProductFinderView } from './views/ProductFinderView';
 import { AccountView } from './views/AccountView';
 import { UserProfileView } from './views/UserProfileView';
+import { LoginView } from './views/auth/LoginView';
+import { SignupView } from './views/auth/SignupView';
+import { ForgotPasswordView } from './views/auth/ForgotPasswordView';
+import { VerifyEmailView } from './views/auth/VerifyEmailView';
+import { ResetPasswordView } from './views/auth/ResetPasswordView';
 import { AdminLoginView } from './views/admin/AdminLoginView';
 import { AdminDashboardView } from './views/admin/AdminDashboardView';
 
@@ -68,6 +73,11 @@ const MainRouter: React.FC = () => {
         {currentRoute === '/tools/product-finder' && <ProductFinderView />}
         {(currentRoute === '/account' || currentRoute === '/account/wishlist' || currentRoute === '/account/watchlist' || currentRoute === '/account/reviews') && <AccountView />}
         {currentRoute === '/user-profile' && <UserProfileView />}
+        {currentRoute === '/login' && <LoginView />}
+        {currentRoute === '/signup' && <SignupView />}
+        {currentRoute === '/forgot-password' && <ForgotPasswordView />}
+        {currentRoute === '/verify-email' && <VerifyEmailView />}
+        {currentRoute === '/reset-password' && <ResetPasswordView />}
       </main>
       <Footer />
       <SearchModal />

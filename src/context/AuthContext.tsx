@@ -9,8 +9,12 @@ interface AuthContextType {
   currentUser: UserProfile | null;
   isAuthenticated: boolean;
   login: (email: string, password?: string) => Promise<UserProfile>;
+  loginWithEmail: (email: string, password?: string) => Promise<UserProfile>;
+  signUp: (fullName: string, email: string, password?: string) => Promise<UserProfile>;
   register: (fullName: string, email: string, username: string) => Promise<UserProfile>;
   socialLogin: (provider: 'google' | 'apple' | 'github') => Promise<UserProfile>;
+  loginWithSocial: (provider: 'google' | 'apple' | 'github') => Promise<UserProfile>;
+  resetPassword: (email: string) => Promise<boolean>;
   logout: () => void;
   updateProfile: (updates: Partial<UserProfile>) => Promise<UserProfile>;
   wishlistItems: WishlistItem[];
@@ -65,11 +69,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return user;
   };
 
-  const register = async (fullName: string, email: string, username: string): Promise<UserProfile> => {
-    const user = await authService.registerWithEmail(fullName, email, username);
+  const loginWithEmail = async (email: string, password?: string): Promise<UserProfile> => {
+    return login(email, password);
+  };
+
+  const signUp = async (fullName: string, email: string, password?: string): Promise<UserProfile> => {
+    const user = await authService.signUp(fullName, email, password);
     setCurrentUser(user);
     await refreshUserData();
     return user;
+  };
+
+  const register = async (fullName: string, email: string, username: string): Promise<UserProfile> => {
+    return signUp(fullName, email);
   };
 
   const socialLogin = async (provider: 'google' | 'apple' | 'github'): Promise<UserProfile> => {
@@ -77,6 +89,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setCurrentUser(user);
     await refreshUserData();
     return user;
+  };
+
+  const loginWithSocial = async (provider: 'google' | 'apple' | 'github'): Promise<UserProfile> => {
+    return socialLogin(provider);
+  };
+
+  const resetPassword = async (email: string): Promise<boolean> => {
+    return authService.resetPassword(email);
   };
 
   const logout = () => {
@@ -102,16 +122,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       openAuthModal('login');
       return false;
     }
-
-    if (isInWishlist(product.id)) {
-      await communityService.removeFromWishlist(currentUser.id, product.id);
-      setWishlistItems((prev) => prev.filter((w) => w.productId !== product.id));
-      return false;
-    } else {
-      const newItem = await communityService.addToWishlist(currentUser.id, product, notes);
-      setWishlistItems((prev) => [newItem, ...prev]);
-      return true;
-    }
+    const added = await communityService.toggleWishlist(currentUser.id, product, notes);
+    await refreshUserData();
+    return added;
   };
 
   const isWatching = (productId: string): boolean => {
@@ -123,16 +136,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       openAuthModal('login');
       return false;
     }
-
-    if (isWatching(product.id)) {
-      await communityService.removeFromWatchlist(currentUser.id, product.id);
-      setWatchlistItems((prev) => prev.filter((w) => w.productId !== product.id));
-      return false;
-    } else {
-      const newItem = await communityService.addToWatchlist(currentUser.id, product, targetPriceUSD);
-      setWatchlistItems((prev) => [newItem, ...prev]);
-      return true;
-    }
+    const added = await communityService.toggleWatchlist(currentUser.id, product, targetPriceUSD);
+    await refreshUserData();
+    return added;
   };
 
   const openAuthModal = (mode: 'login' | 'register' = 'login') => {
@@ -150,8 +156,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         currentUser,
         isAuthenticated: !!currentUser,
         login,
+        loginWithEmail,
+        signUp,
         register,
         socialLogin,
+        loginWithSocial,
+        resetPassword,
         logout,
         updateProfile,
         wishlistItems,
@@ -174,7 +184,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   );
 };
 
-export const useAuth = (): AuthContextType => {
+export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
     throw new Error('useAuth must be used within an AuthProvider');

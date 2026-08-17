@@ -370,7 +370,7 @@ export const Header: React.FC = () => {
               variant="primary"
               size="sm"
               icon={<User size={14} />}
-              onClick={() => openAuthModal('login')}
+              onClick={() => navigate('/login')}
               style={{ borderRadius: 'var(--radius-pill)', fontSize: '0.8rem', padding: '6px 14px' }}
             >
               Sign In

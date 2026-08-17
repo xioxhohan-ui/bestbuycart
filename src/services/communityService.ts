@@ -131,9 +131,15 @@ class CommunityService {
     this.updateUserStats(userId, { wishlistChange: -1 });
   }
 
-  public async isProductInWishlist(userId: string, productId: string): Promise<boolean> {
-    this.initData();
-    return this.wishlists.some((w) => w.userId === userId && w.productId === productId);
+  public async toggleWishlist(userId: string, product: Product, notes?: string): Promise<boolean> {
+    const isSaved = await this.isProductInWishlist(userId, product.id);
+    if (isSaved) {
+      await this.removeFromWishlist(userId, product.id);
+      return false;
+    } else {
+      await this.addToWishlist(userId, product, notes);
+      return true;
+    }
   }
 
   public exportWishlist(items: WishlistItem[], format: 'json' | 'csv'): string {
@@ -203,11 +209,32 @@ class CommunityService {
     return newItem;
   }
 
+  public async isProductInWishlist(userId: string, productId: string): Promise<boolean> {
+    this.initData();
+    return this.wishlists.some((w) => w.userId === userId && w.productId === productId);
+  }
+
   public async removeFromWatchlist(userId: string, productId: string): Promise<void> {
     this.initData();
     this.watchlists = this.watchlists.filter((w) => !(w.userId === userId && w.productId === productId));
     this.saveWatchlists();
     this.updateUserStats(userId, { watchlistChange: -1 });
+  }
+
+  public async isProductInWatchlist(userId: string, productId: string): Promise<boolean> {
+    this.initData();
+    return this.watchlists.some((w) => w.userId === userId && w.productId === productId);
+  }
+
+  public async toggleWatchlist(userId: string, product: Product, targetPriceUSD: number): Promise<boolean> {
+    const isWatching = await this.isProductInWatchlist(userId, product.id);
+    if (isWatching) {
+      await this.removeFromWatchlist(userId, product.id);
+      return false;
+    } else {
+      await this.addToWatchlist(userId, product, targetPriceUSD);
+      return true;
+    }
   }
 
   // ==========================================

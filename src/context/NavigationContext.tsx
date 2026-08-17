@@ -27,6 +27,11 @@ export type ActiveRoute =
   | '/account/watchlist'
   | '/account/reviews'
   | '/user-profile'
+  | '/login'
+  | '/signup'
+  | '/forgot-password'
+  | '/verify-email'
+  | '/reset-password'
   | '/shohan';
 
 interface NavigationOptions {
