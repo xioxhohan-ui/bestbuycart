@@ -32,6 +32,7 @@ import { AdminCommentManager } from '../../components/admin/AdminCommentManager'
 import { AdminLoyaltyManager } from '../../components/admin/AdminLoyaltyManager';
 import { AdminMenuManager } from '../../components/admin/AdminMenuManager';
 import { AdminBulkImporter } from '../../components/admin/AdminBulkImporter';
+import { AdminNewsManager } from '../../components/admin/AdminNewsManager';
 import {
   LayoutDashboard,
   Package,
@@ -62,6 +63,7 @@ import {
   MessageSquare,
   Award,
   Upload,
+  Newspaper,
   Menu as MenuIcon
 } from 'lucide-react';
 
@@ -69,6 +71,7 @@ type AdminTab =
   | 'dashboard'
   | 'products'
   | 'importer'
+  | 'news'
   | 'menu'
   | 'users'
   | 'reviews'
@@ -110,6 +113,7 @@ export const AdminDashboardView: React.FC = () => {
     { id: 'dashboard', label: 'Overview Dashboard', icon: <LayoutDashboard size={17} /> },
     { id: 'products', label: 'Products & Scores', icon: <Package size={17} /> },
     { id: 'importer', label: 'Bulk Feed & Automation', icon: <Upload size={17} /> },
+    { id: 'news', label: 'News & Announcements', icon: <Newspaper size={17} /> },
     { id: 'menu', label: 'Mega Navigation Builder', icon: <MenuIcon size={17} /> },
     { id: 'users', label: 'User Management', icon: <Users size={17} /> },
     { id: 'reviews', label: 'Review Moderation', icon: <Award size={17} /> },
@@ -274,6 +278,7 @@ export const AdminDashboardView: React.FC = () => {
           {activeTab === 'dashboard' && <AdminDashboardOverview />}
           {activeTab === 'products' && <AdminProductList categories={categories} />}
           {activeTab === 'importer' && <AdminBulkImporter />}
+          {activeTab === 'news' && <AdminNewsManager />}
           {activeTab === 'menu' && <AdminMenuManager />}
           {activeTab === 'users' && <AdminUserManager />}
           {activeTab === 'reviews' && <AdminReviewManager />}

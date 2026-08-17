@@ -37,13 +37,15 @@ import { VerifyEmailView } from './views/auth/VerifyEmailView';
 import { ResetPasswordView } from './views/auth/ResetPasswordView';
 import { AdminLoginView } from './views/admin/AdminLoginView';
 import { AdminDashboardView } from './views/admin/AdminDashboardView';
+import { NewsView } from './views/NewsView';
+import { NewsDetailView } from './views/NewsDetailView';
 
 const MainRouter: React.FC = () => {
   const { currentRoute } = useNavigation();
   const { isAuthenticated } = useAdminAuth();
 
-  // If on admin route /shohan, render dedicated CMS shell
-  if (currentRoute === '/shohan') {
+  // If on admin route /shohan or pathname starts with /shohan, render dedicated CMS shell
+  if (currentRoute === '/shohan' || (typeof window !== 'undefined' && window.location.pathname.startsWith('/shohan'))) {
     return isAuthenticated ? <AdminDashboardView /> : <AdminLoginView />;
   }
 
@@ -65,6 +67,8 @@ const MainRouter: React.FC = () => {
         {currentRoute === '/gift-finder' && <GiftFinderView />}
         {currentRoute === '/guides' && <GuidesView />}
         {currentRoute === '/guides/how-to-choose-headphones' && <GuideDetailView />}
+        {currentRoute === '/news' && <NewsView />}
+        {currentRoute === '/news/detail' && <NewsDetailView />}
         {currentRoute === '/is-it-worth-it' && <IsItWorthItView />}
         {currentRoute === '/methodology' && <MethodologyView />}
         {currentRoute === '/tools' && <ToolsView />}

@@ -27,7 +27,8 @@ import {
   LogOut,
   Award,
   ChevronDown,
-  Settings
+  Settings,
+  Newspaper
 } from 'lucide-react';
 import { Button } from '../ui/Button';
 
@@ -130,6 +131,15 @@ export const Header: React.FC = () => {
           >
             <Sparkles size={15} />
             <span>Gift Finder</span>
+          </button>
+
+          <button
+            onClick={() => navigate('/news')}
+            className={`nav-link ${currentRoute.startsWith('/news') ? 'active' : ''}`}
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}
+          >
+            <Newspaper size={15} />
+            <span>News & Updates</span>
           </button>
 
           {/* Discover Dropdown Trigger */}
