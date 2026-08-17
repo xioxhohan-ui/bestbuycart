@@ -22,10 +22,12 @@ export const Modal: React.FC<ModalProps> = ({
     };
     if (isOpen) {
       document.body.style.overflow = 'hidden';
+      document.body.classList.add('modal-open');
       window.addEventListener('keydown', handleKeyDown);
     }
     return () => {
       document.body.style.overflow = '';
+      document.body.classList.remove('modal-open');
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [isOpen, onClose]);
