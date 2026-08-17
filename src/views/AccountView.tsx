@@ -83,21 +83,14 @@ export const AccountView: React.FC = () => {
     });
   }, [currentUser]);
 
+  useEffect(() => {
+    if (!isAuthenticated || !currentUser) {
+      navigate('/login');
+    }
+  }, [isAuthenticated, currentUser, navigate]);
+
   if (!isAuthenticated || !currentUser) {
-    return (
-      <div className="section-spacing container" style={{ textAlign: 'center', padding: '100px 20px' }}>
-        <User size={56} style={{ color: '#94A3B8', margin: '0 auto 16px' }} />
-        <h2 className="h2" style={{ margin: '0 0 8px', color: '#1A1A1A' }}>
-          Sign In to Access Your Account
-        </h2>
-        <p style={{ color: '#64748B', maxWidth: '440px', margin: '0 auto 24px', fontSize: '0.95rem' }}>
-          Create an account or sign in to save products to your wishlist, track price drop radars, and write verified reviews.
-        </p>
-        <Button variant="primary" size="lg" onClick={() => openAuthModal('login')}>
-          Sign In / Create Account
-        </Button>
-      </div>
-    );
+    return null;
   }
 
   const handleSaveSettings = async (e: React.FormEvent) => {

@@ -105,11 +105,11 @@ export const DealCard: React.FC<DealCardProps> = ({ deal }) => {
       </div>
 
       {/* Price Block */}
-      <div className="flex items-baseline gap-xs" style={{ marginTop: 'auto' }}>
-        <span className="font-mono" style={{ fontSize: '1.3rem', fontWeight: 900, color: '#059669' }}>
+      <div className="flex items-baseline gap-xs" style={{ marginTop: 'auto', flexWrap: 'wrap' }}>
+        <span className="font-mono" style={{ fontSize: '1.3rem', fontWeight: 900, color: '#059669', whiteSpace: 'nowrap' }}>
           {formatPrice(deal.dealPriceUSD)}
         </span>
-        <span className="font-mono" style={{ fontSize: '0.88rem', color: '#9CA3AF', textDecoration: 'line-through' }}>
+        <span className="font-mono" style={{ fontSize: '0.88rem', color: '#9CA3AF', textDecoration: 'line-through', whiteSpace: 'nowrap' }}>
           {formatPrice(deal.originalPriceUSD)}
         </span>
       </div>

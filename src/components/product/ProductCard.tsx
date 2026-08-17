@@ -167,12 +167,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         </div>
 
         {/* Price Row */}
-        <div className="flex items-baseline gap-sm" style={{ marginTop: '2px' }}>
-          <span className="product-card-price font-mono">
+        <div className="flex items-baseline gap-sm" style={{ marginTop: '2px', flexWrap: 'wrap' }}>
+          <span className="product-card-price font-mono" style={{ whiteSpace: 'nowrap' }}>
             {formatPrice(product.priceUSD)}
           </span>
           {product.originalPriceUSD && (
-            <span className="product-card-original-price font-mono">
+            <span className="product-card-original-price font-mono" style={{ whiteSpace: 'nowrap' }}>
               {formatPrice(product.originalPriceUSD)}
             </span>
           )}

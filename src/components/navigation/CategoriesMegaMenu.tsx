@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigation } from '../../context/NavigationContext';
 import { menuService } from '../../services/menuService';
 import { CategoryIcon } from '../ui/CategoryIcon';
-import { Grid2X2, ChevronRight, Sparkles, ArrowRight, Star, ShieldCheck } from 'lucide-react';
+import { Grid2X2, ChevronRight } from 'lucide-react';
 
 interface MegaCategory {
   id: string;
@@ -38,31 +38,30 @@ export const CategoriesMegaMenu: React.FC<CategoriesMegaMenuProps> = ({ isOpen, 
         left: 0,
         right: 0,
         backgroundColor: '#FFFFFF',
-        boxShadow: '0 25px 50px -12px rgba(15, 23, 42, 0.25)',
+        boxShadow: '0 20px 35px -10px rgba(15, 23, 42, 0.2)',
         borderTop: '1px solid #E2E8F0',
         borderBottom: '2px solid #2563EB',
         zIndex: 9990,
+        maxHeight: '70vh',
+        overflowY: 'auto',
         animation: 'fadeInScale 0.15s ease-out'
       }}
       onMouseLeave={onClose}
     >
-      <div className="container" style={{ padding: '28px 24px' }}>
-        {/* Header Bar inside Mega Menu */}
+      <div className="container" style={{ padding: '16px 24px' }}>
+        {/* Compact Header Bar */}
         <div
           className="flex items-center justify-between"
           style={{
-            paddingBottom: '16px',
-            marginBottom: '20px',
+            paddingBottom: '10px',
+            marginBottom: '14px',
             borderBottom: '1px solid #F1F5F9'
           }}
         >
           <div className="flex items-center gap-xs">
-            <Grid2X2 size={18} style={{ color: '#2563EB' }} />
-            <span style={{ fontSize: '0.9rem', fontWeight: 800, color: '#1A1A1A', letterSpacing: '-0.01em' }}>
-              BROWSE ALL 14 CATEGORY HUBS
-            </span>
-            <span style={{ fontSize: '0.75rem', color: '#64748B', marginLeft: '6px' }}>
-              • Over 1,200+ verified products with Worth & Hype Scores
+            <Grid2X2 size={15} style={{ color: '#2563EB' }} />
+            <span style={{ fontSize: '0.82rem', fontWeight: 800, color: '#0F172A', letterSpacing: '-0.01em' }}>
+              BROWSE CATEGORIES (14 HUBS)
             </span>
           </div>
 
@@ -75,33 +74,33 @@ export const CategoriesMegaMenu: React.FC<CategoriesMegaMenuProps> = ({ isOpen, 
               background: 'none',
               border: 'none',
               color: '#2563EB',
-              fontSize: '0.82rem',
+              fontSize: '0.78rem',
               fontWeight: 700,
               cursor: 'pointer',
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '4px'
+              gap: '3px'
             }}
           >
-            <span>View All Categories Hub</span>
-            <ChevronRight size={14} />
+            <span>View All Categories</span>
+            <ChevronRight size={13} />
           </button>
         </div>
 
-        {/* 4-Column Grid of Categories & Subcategories */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px' }}>
+        {/* 5-Column Compact Grid */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '10px' }}>
           {categories.map((cat) => (
             <div
               key={cat.id}
               style={{
-                padding: '12px 14px',
-                borderRadius: '12px',
+                padding: '8px 10px',
+                borderRadius: '8px',
                 backgroundColor: '#F8FAFC',
                 border: '1px solid #F1F5F9',
-                transition: 'all 0.15s'
+                transition: 'all 0.12s'
               }}
             >
-              {/* Main Category Header */}
+              {/* Category Title Header */}
               <div
                 onClick={() => {
                   navigate('/category-detail', { categorySlug: cat.slug });
@@ -110,16 +109,16 @@ export const CategoriesMegaMenu: React.FC<CategoriesMegaMenuProps> = ({ isOpen, 
                 style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '10px',
+                  gap: '6px',
                   cursor: 'pointer',
-                  marginBottom: '10px'
+                  marginBottom: '6px'
                 }}
               >
                 <div
                   style={{
-                    width: '32px',
-                    height: '32px',
-                    borderRadius: '8px',
+                    width: '24px',
+                    height: '24px',
+                    borderRadius: '6px',
                     backgroundColor: '#FFFFFF',
                     border: '1px solid #E2E8F0',
                     display: 'flex',
@@ -129,46 +128,45 @@ export const CategoriesMegaMenu: React.FC<CategoriesMegaMenuProps> = ({ isOpen, 
                     flexShrink: 0
                   }}
                 >
-                  <CategoryIcon slugOrId={cat.slug} size={16} />
+                  <CategoryIcon slugOrId={cat.slug} size={13} />
                 </div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontWeight: 800, fontSize: '0.88rem', color: '#1A1A1A', lineHeight: 1.2 }}>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontWeight: 800, fontSize: '0.8rem', color: '#0F172A', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                     {cat.name}
-                  </div>
-                  <div style={{ fontSize: '0.7rem', color: '#64748B', fontWeight: 600 }}>
-                    {cat.itemCount} items
                   </div>
                 </div>
               </div>
 
-              {/* Subcategories List */}
-              <ul style={{ margin: 0, paddingLeft: '42px', listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                {cat.subcategories.slice(0, 4).map((sub) => (
-                  <li key={sub.id}>
-                    <button
-                      onClick={() => {
-                        navigate('/category-detail', { categorySlug: cat.slug, subcategorySlug: sub.slug });
-                        onClose();
-                      }}
-                      style={{
-                        background: 'none',
-                        border: 'none',
-                        padding: '2px 0',
-                        fontSize: '0.8rem',
-                        color: '#475569',
-                        fontWeight: 500,
-                        cursor: 'pointer',
-                        textAlign: 'left',
-                        transition: 'color 0.15s'
-                      }}
-                      onMouseEnter={(e) => (e.currentTarget.style.color = '#2563EB')}
-                      onMouseLeave={(e) => (e.currentTarget.style.color = '#475569')}
-                    >
-                      {sub.name}
-                    </button>
-                  </li>
+              {/* Compact Subcategory Links */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', paddingLeft: '30px' }}>
+                {cat.subcategories.slice(0, 3).map((sub) => (
+                  <button
+                    key={sub.id}
+                    onClick={() => {
+                      navigate('/category-detail', { categorySlug: cat.slug, subcategorySlug: sub.slug });
+                      onClose();
+                    }}
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      padding: '1px 0',
+                      fontSize: '0.74rem',
+                      color: '#64748B',
+                      fontWeight: 500,
+                      cursor: 'pointer',
+                      textAlign: 'left',
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      transition: 'color 0.12s'
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = '#2563EB')}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = '#64748B')}
+                  >
+                    {sub.name}
+                  </button>
                 ))}
-              </ul>
+              </div>
             </div>
           ))}
         </div>

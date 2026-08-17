@@ -1,6 +1,5 @@
 import React from 'react';
 import { Subcategory } from '../../types/category';
-import { useNavigation } from '../../context/NavigationContext';
 
 interface SubcategoryPillBarProps {
   categorySlug: string;
@@ -18,14 +17,14 @@ export const SubcategoryPillBar: React.FC<SubcategoryPillBarProps> = ({
   totalProductCount
 }) => {
   return (
-    <div style={{ marginBottom: '24px' }}>
+    <div style={{ marginBottom: '16px' }}>
       <div
         style={{
           display: 'flex',
           alignItems: 'center',
-          gap: '8px',
+          gap: '6px',
           overflowX: 'auto',
-          paddingBottom: '8px',
+          paddingBottom: '4px',
           WebkitOverflowScrolling: 'touch',
           scrollbarWidth: 'none'
         }}
@@ -36,8 +35,8 @@ export const SubcategoryPillBar: React.FC<SubcategoryPillBarProps> = ({
           className={`btn btn-sm ${activeSubcategorySlug === null ? 'btn-primary' : 'btn-secondary'}`}
           style={{
             borderRadius: '999px',
-            fontSize: '0.82rem',
-            padding: '6px 14px',
+            fontSize: '0.78rem',
+            padding: '5px 12px',
             flexShrink: 0,
             fontWeight: activeSubcategorySlug === null ? 700 : 500
           }}
@@ -54,15 +53,15 @@ export const SubcategoryPillBar: React.FC<SubcategoryPillBarProps> = ({
               className={`btn btn-sm ${isActive ? 'btn-primary' : 'btn-secondary'}`}
               style={{
                 borderRadius: '999px',
-                fontSize: '0.82rem',
-                padding: '6px 14px',
+                fontSize: '0.78rem',
+                padding: '5px 12px',
                 flexShrink: 0,
                 fontWeight: isActive ? 700 : 500,
                 borderColor: isActive ? 'var(--accent-primary)' : 'var(--border-default)'
               }}
             >
               <span>{sub.name}</span>
-              <span style={{ fontSize: '0.72rem', opacity: isActive ? 0.9 : 0.6, marginLeft: '4px' }}>
+              <span style={{ fontSize: '0.7rem', opacity: isActive ? 0.9 : 0.6, marginLeft: '4px' }}>
                 ({sub.productCount})
               </span>
             </button>
