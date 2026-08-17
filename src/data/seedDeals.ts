@@ -1,0 +1,305 @@
+import { Deal, PriceAlert, SeasonalCampaign, EmailCampaign } from '../types/deals';
+
+// Create timestamp offsets for active timers (e.g. 5 hours left, 12 hours left, 2 days left)
+const now = new Date();
+const in5Hours = new Date(now.getTime() + 5 * 60 * 60 * 1000).toISOString();
+const in12Hours = new Date(now.getTime() + 12 * 60 * 60 * 1000).toISOString();
+const in2Days = new Date(now.getTime() + 48 * 60 * 60 * 1000).toISOString();
+const in4Hours = new Date(now.getTime() + 4 * 60 * 60 * 1000).toISOString();
+const in7Days = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000).toISOString();
+
+export const SEED_DEALS: Deal[] = [
+  {
+    id: 'deal-1',
+    productId: 'prod-1', // Sony WH-1000XM5
+    productName: 'Sony WH-1000XM5 Wireless Noise-Canceling Headphones',
+    brand: 'Sony',
+    category: 'tech',
+    image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&auto=format&fit=crop&q=80',
+    dealType: 'price_drop',
+    originalPriceUSD: 349.99,
+    dealPriceUSD: 299.00,
+    discountPercent: 15,
+    retailerName: 'Amazon',
+    retailerUrl: 'https://amazon.com',
+    startDate: now.toISOString(),
+    endDate: in12Hours,
+    timezone: 'America/New_York',
+    showCountdown: true,
+    status: 'active',
+    countries: ['US', 'UK', 'DE', 'FR', 'CA', 'AU'],
+    slug: 'sony-wh-1000xm5-price-drop',
+    views: 4320,
+    clicks: 1240,
+    isTopDeal: true,
+    isPriceDrop: true
+  },
+  {
+    id: 'deal-2',
+    productId: 'prod-2', // Breville Barista Touch
+    productName: 'Breville Barista Touch Impress Espresso Machine',
+    brand: 'Breville',
+    category: 'kitchen',
+    image: 'https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?w=800&auto=format&fit=crop&q=80',
+    dealType: 'flash_sale',
+    originalPriceUSD: 1499.95,
+    dealPriceUSD: 1199.95,
+    discountPercent: 20,
+    retailerName: 'Best Buy',
+    retailerUrl: 'https://bestbuy.com',
+    startDate: now.toISOString(),
+    endDate: in5Hours,
+    timezone: 'America/New_York',
+    showCountdown: true,
+    status: 'active',
+    countries: ['US', 'CA', 'UK'],
+    slug: 'breville-barista-touch-flash-sale',
+    views: 3120,
+    clicks: 890,
+    isTopDeal: true,
+    isPriceDrop: true
+  },
+  {
+    id: 'deal-3',
+    productId: 'prod-3', // Dyson Airwrap
+    productName: 'Dyson Airwrap Multi-Styler Complete Long',
+    brand: 'Dyson',
+    category: 'beauty',
+    image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=800&auto=format&fit=crop&q=80',
+    dealType: 'price_drop',
+    originalPriceUSD: 599.99,
+    dealPriceUSD: 499.99,
+    discountPercent: 17,
+    retailerName: 'Walmart',
+    retailerUrl: 'https://walmart.com',
+    startDate: now.toISOString(),
+    endDate: in2Days,
+    timezone: 'America/New_York',
+    showCountdown: true,
+    status: 'active',
+    countries: ['US', 'UK', 'DE', 'FR'],
+    slug: 'dyson-airwrap-price-drop',
+    views: 5210,
+    clicks: 1640,
+    isTopDeal: true,
+    isPriceDrop: true
+  },
+  {
+    id: 'deal-4',
+    productId: 'prod-4', // Anker Prime 200W
+    productName: 'Anker Prime 200W 20,000mAh Power Bank',
+    brand: 'Anker',
+    category: 'tech',
+    image: 'https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=800&auto=format&fit=crop&q=80',
+    dealType: 'flash_sale',
+    originalPriceUSD: 129.99,
+    dealPriceUSD: 89.99,
+    discountPercent: 31,
+    retailerName: 'Amazon',
+    retailerUrl: 'https://amazon.com',
+    startDate: now.toISOString(),
+    endDate: in4Hours,
+    timezone: 'America/New_York',
+    showCountdown: true,
+    status: 'active',
+    countries: ['US', 'UK', 'DE', 'FR', 'CA', 'AU'],
+    slug: 'anker-prime-power-bank-deal',
+    views: 6420,
+    clicks: 2100,
+    isTopDeal: true,
+    isPriceDrop: true
+  },
+  {
+    id: 'deal-5',
+    productId: 'prod-gem-1', // EarFun Air Pro 4
+    productName: 'EarFun Air Pro 4 Hi-Res Wireless Earbuds',
+    brand: 'EarFun',
+    category: 'tech',
+    image: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=800&auto=format&fit=crop&q=80',
+    dealType: 'price_drop',
+    originalPriceUSD: 99.99,
+    dealPriceUSD: 69.99,
+    discountPercent: 30,
+    retailerName: 'Amazon',
+    retailerUrl: 'https://amazon.com',
+    startDate: now.toISOString(),
+    endDate: in7Days,
+    timezone: 'America/New_York',
+    showCountdown: false,
+    status: 'active',
+    countries: ['US', 'UK', 'DE', 'FR', 'CA', 'AU'],
+    slug: 'earfun-air-pro-4-discount',
+    views: 2980,
+    clicks: 940,
+    isTopDeal: false,
+    isPriceDrop: true
+  },
+  {
+    id: 'deal-6',
+    productId: 'prod-budget-1',
+    productName: 'Anker USB-C Braided Fast Charging Cable (2-Pack)',
+    brand: 'Anker',
+    category: 'tech',
+    image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?w=800&auto=format&fit=crop&q=80',
+    dealType: 'clearance',
+    originalPriceUSD: 19.99,
+    dealPriceUSD: 12.99,
+    discountPercent: 35,
+    retailerName: 'Amazon',
+    retailerUrl: 'https://amazon.com',
+    startDate: now.toISOString(),
+    endDate: in7Days,
+    timezone: 'America/New_York',
+    showCountdown: false,
+    status: 'active',
+    countries: ['US', 'UK', 'CA'],
+    slug: 'anker-usbc-cable-deal',
+    views: 1890,
+    clicks: 620,
+    isUnder25: true
+  },
+  {
+    id: 'deal-7',
+    productId: 'prod-budget-2',
+    productName: 'ThermoPro TP03 Digital Meat Thermometer',
+    brand: 'ThermoPro',
+    category: 'kitchen',
+    image: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=800&auto=format&fit=crop&q=80',
+    dealType: 'price_drop',
+    originalPriceUSD: 24.99,
+    dealPriceUSD: 14.99,
+    discountPercent: 40,
+    retailerName: 'Amazon',
+    retailerUrl: 'https://amazon.com',
+    startDate: now.toISOString(),
+    endDate: in7Days,
+    timezone: 'America/New_York',
+    showCountdown: false,
+    status: 'active',
+    countries: ['US', 'UK', 'DE', 'FR', 'CA'],
+    slug: 'thermopro-meat-thermometer-deal',
+    views: 2450,
+    clicks: 810,
+    isUnder25: true
+  },
+  {
+    id: 'deal-8',
+    productId: 'prod-budget-3',
+    productName: 'Lodge Cast Iron Silicone Hot Handle Holder',
+    brand: 'Lodge',
+    category: 'kitchen',
+    image: 'https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?w=800&auto=format&fit=crop&q=80',
+    dealType: 'price_drop',
+    originalPriceUSD: 9.99,
+    dealPriceUSD: 5.99,
+    discountPercent: 40,
+    retailerName: 'Walmart',
+    retailerUrl: 'https://walmart.com',
+    startDate: now.toISOString(),
+    endDate: in7Days,
+    timezone: 'America/New_York',
+    showCountdown: false,
+    status: 'active',
+    countries: ['US', 'CA'],
+    slug: 'lodge-handle-holder-deal',
+    views: 1200,
+    clicks: 430,
+    isUnder25: true
+  }
+];
+
+export const SEED_PRICE_ALERTS: PriceAlert[] = [
+  {
+    id: 'alert-1',
+    userEmail: 'alex.buyer@gmail.com',
+    productId: 'prod-1',
+    productName: 'Sony WH-1000XM5',
+    currentPriceUSD: 299,
+    targetPriceUSD: 260,
+    status: 'active',
+    createdAt: '2026-08-10T14:30:00.000Z'
+  },
+  {
+    id: 'alert-2',
+    userEmail: 'sarah.coffee@outlook.com',
+    productId: 'prod-2',
+    productName: 'Breville Barista Touch Impress',
+    currentPriceUSD: 1199.95,
+    targetPriceUSD: 1100,
+    status: 'active',
+    createdAt: '2026-08-12T09:15:00.000Z'
+  },
+  {
+    id: 'alert-3',
+    userEmail: 'dev.shopper@icloud.com',
+    productId: 'prod-4',
+    productName: 'Anker Prime 200W Power Bank',
+    currentPriceUSD: 89.99,
+    targetPriceUSD: 90,
+    status: 'triggered',
+    createdAt: '2026-08-01T11:00:00.000Z',
+    triggeredAt: '2026-08-16T10:00:00.000Z'
+  }
+];
+
+export const SEED_SEASONAL_CAMPAIGNS: SeasonalCampaign[] = [
+  {
+    id: 'season-1',
+    name: 'Holiday & Christmas Gift Guide 2026',
+    season: 'Holiday 2026',
+    slug: 'christmas-deals',
+    headline: 'The Best Gifts at Verified Lowest Prices This Season',
+    description: 'Avoid retail markups. We track 30-day historical prices across Amazon, Best Buy, and Walmart so you never overpay for holiday gifting.',
+    featuredDealId: 'deal-1',
+    dealIds: ['deal-1', 'deal-2', 'deal-3', 'deal-4'],
+    status: 'active',
+    startDate: '2026-08-01',
+    endDate: '2026-12-25',
+    clicks: 14250,
+    conversions: 2410,
+    revenueUSD: 24500
+  },
+  {
+    id: 'season-2',
+    name: 'Black Friday Early Access Radar',
+    season: 'Fall 2026',
+    slug: 'black-friday-early-access',
+    headline: 'Sneak Peek at Doorbuster Discounts & Price Drops',
+    description: 'Get notified the instant major tech and home essentials drop below verified Black Friday price floors.',
+    featuredDealId: 'deal-2',
+    dealIds: ['deal-1', 'deal-2', 'deal-4'],
+    status: 'draft',
+    startDate: '2026-11-01',
+    endDate: '2026-11-30',
+    clicks: 0,
+    conversions: 0,
+    revenueUSD: 0
+  }
+];
+
+export const SEED_EMAIL_CAMPAIGNS: EmailCampaign[] = [
+  {
+    id: 'email-1',
+    name: 'Weekend Price Drops — August 16',
+    subject: '5 Verified Price Drops on Sony, Breville, and Anker',
+    template: 'price_drop_alert',
+    dealIds: ['deal-1', 'deal-2', 'deal-4'],
+    sendDate: '2026-08-16T10:00:00.000Z',
+    status: 'sent',
+    subscribersCount: 5678,
+    opensCount: 2384,
+    clicksCount: 1022
+  },
+  {
+    id: 'email-2',
+    name: 'Weekly Top 10 Deals Roundup',
+    subject: 'The Best Verified Tech & Kitchen Deals This Week',
+    template: 'weekly_roundup',
+    dealIds: ['deal-1', 'deal-2', 'deal-3', 'deal-4', 'deal-5'],
+    sendDate: '2026-08-21T10:00:00.000Z',
+    status: 'scheduled',
+    subscribersCount: 5890,
+    opensCount: 0,
+    clicksCount: 0
+  }
+];
